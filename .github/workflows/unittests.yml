@@ -1,4 +1,11 @@
-on: [push, pull_request]
+on: 
+  push:
+    paths: ['**.R', '**.svg', '**.Rd', 'DESCRIPTION', 'NAMESPACE']
+  pull_request:
+    paths: ['**.R', '**.svg', '**.Rd', 'DESCRIPTION', 'NAMESPACE']
+#  uncomment to run the unit tests every workday at ~ 13:12 UTC
+#   schedule:
+#     - cron:  '13 12 * * 1-5'
 
 name: unit-tests
 

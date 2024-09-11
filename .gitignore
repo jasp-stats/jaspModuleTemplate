@@ -59,3 +59,4 @@ Thumbs.db
 .Rproj.user
 
 _processedLockFile.lock
+renv.lock

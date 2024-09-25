@@ -11,11 +11,12 @@ Description
 	maintainer	: "JASP Team <info@jasp-stats.org>"
 	website		: "https://jasp-stats.org"
 	license		: "GPL (>= 2)"
+	requiresData: false
 
 	Analysis
 	{
-		title:  "Example"
-		func: 	"DummyAnalysis"
-		qml:	"DummyAnalysis.qml"
+		title:  "Static text output"
+		func: 	"StaticText"
+		qml:	"examples.qml"
 	}
 }

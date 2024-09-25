@@ -1,2 +1,2 @@
 import(jaspBase)
-export(DummyAnalysis)
+export(StaticText)

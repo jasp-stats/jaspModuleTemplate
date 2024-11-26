@@ -23,25 +23,10 @@ import JASP				1.0
 
 Form
 {
-	VariablesForm
-	{
-		AvailableVariablesList
-		{
-			name: "allVariablesList"
-		}
-
-		AssignedVariablesList
-		{
-			name:				"myVariable"
-			title:				qsTr("Chosen variable")
-			allowedColumns:		["scale"]
-			singleVariable:		true
-		}
-	}
 
 	IntegerField
 	{
-		name: "integer"
+		name: "mynumber"
 		label: qsTr("Type a number")
 		min: 1
 		defaultValue: 10

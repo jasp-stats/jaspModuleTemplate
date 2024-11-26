@@ -32,4 +32,11 @@ Description
 		func: 	"RandomText"
 		qml:	"examples.qml"
 	}
+
+	Analysis
+	{
+		title: "Integer input"
+		func: "AddOne"
+		qml: "integer.qml"
+	}
 }

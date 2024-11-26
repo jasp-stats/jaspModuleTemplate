@@ -11,3 +11,10 @@ RandomText <- function(jaspResults, dataset, options) {
 
     return()
 }
+
+AddOne <- function(jaspResults, dataset, options) {
+    text <- createJaspHtml(text = paste(sample(LETTERS, 5), collapse = ""))
+    jaspResults[["text"]] <- text
+
+    return()
+}

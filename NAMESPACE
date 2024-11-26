@@ -1,3 +1,4 @@
 import(jaspBase)
 export(StaticText)
 export(RandomText)
+export(AddOne)

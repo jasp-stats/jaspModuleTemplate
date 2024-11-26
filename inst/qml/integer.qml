@@ -26,7 +26,7 @@ Form
 
 	IntegerField
 	{
-		name: "mynumber"
+		name: "my_number"
 		label: qsTr("Type a number")
 		min: 1
 		defaultValue: 10

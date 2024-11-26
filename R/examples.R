@@ -13,8 +13,8 @@ RandomText <- function(jaspResults, dataset, options) {
 }
 
 AddOne <- function(jaspResults, dataset, options) {
-    text <- createJaspHtml(text = paste(sample(LETTERS, 5), collapse = ""))
-    jaspResults[["text"]] <- text
+    result <- as.character(options$my_number + 1)
+    jaspResults[["result"]] <- createJaspHtml(text = result)
 
     return()
 }

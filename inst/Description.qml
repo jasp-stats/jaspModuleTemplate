@@ -5,7 +5,7 @@ Description
 {
 	name		: "jaspModule"
 	title		: qsTr("Jasp Module")
-	description	: qsTr("This module offers analyses.")
+	description	: qsTr("Examples for module builders")
 	version		: "0.1"
 	author		: "JASP Team"
 	maintainer	: "JASP Team <info@jasp-stats.org>"
@@ -13,10 +13,23 @@ Description
 	license		: "GPL (>= 2)"
 	requiresData: false
 
+
+	GroupTitle
+	{
+		title:	qsTr("Text")
+	}
+
 	Analysis
 	{
-		title:  "Static text output"
+		title:  "Static text"
 		func: 	"StaticText"
+		qml:	"examples.qml"
+	}
+
+	Analysis
+	{
+		title:  "Random text"
+		func: 	"RandomText"
 		qml:	"examples.qml"
 	}
 }

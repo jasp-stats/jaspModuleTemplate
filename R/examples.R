@@ -4,3 +4,10 @@ StaticText <- function(jaspResults, dataset, options) {
     jaspResults[["staticTextDescriptives"]] <- staticTextDescriptives
     return()
 }
+
+RandomText <- function(jaspResults, dataset, options) {
+    text <- createJaspHtml(text = paste(sample(LETTERS, 5), collapse = ""))
+    jaspResults[["text"]] <- text
+
+    return()
+}

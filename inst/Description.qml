@@ -23,7 +23,7 @@ Description
 	{
 		title:  "Static text"
 		func: 	"StaticText"
-		qml:	"examples.qml"
+		qml:	  "examples.qml"
 	}
 
 	Analysis
@@ -35,8 +35,9 @@ Description
 
 	Analysis
 	{
-		title: "Integer input"
-		func: "AddOne"
-		qml: "integer.qml"
+	  menu: "Add one"       // Title for ribbon
+		title: "Add one"      // Title for window
+		func: "AddOne"        // Function to be called
+		qml: "integer.qml"    // Design input window
 	}
 }

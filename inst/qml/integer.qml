@@ -24,13 +24,21 @@ import JASP				1.0
 Form
 {
 
+  Text
+  {
+      text: "This example shows how to manually introduce an input and perform a simple operation on it"
+  }
+
 	IntegerField
 	{
-		name: "my_number"
-		label: qsTr("Type a number")
+		name: "my_number"              // This will map to options$my_number in R
+		label: qsTr("Type a number")   // qsTr allows for future translations
+
+		// We can add some extra control parameters
 		min: 1
 		defaultValue: 10
 		fieldWidth: 50
 		max: 1000
 	}
+
 }

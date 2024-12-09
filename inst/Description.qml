@@ -16,21 +16,7 @@ Description
 
 	GroupTitle
 	{
-		title:	qsTr("Text")
-	}
-
-	Analysis
-	{
-		title:  "Static text"
-		func: 	"StaticText"
-		qml:	  "examples.qml"
-	}
-
-	Analysis
-	{
-		title:  "Random text"
-		func: 	"RandomText"
-		qml:	"examples.qml"
+		title:	qsTr("Basic functions")
 	}
 
 	Analysis

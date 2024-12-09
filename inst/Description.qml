@@ -26,4 +26,16 @@ Description
 		func: "AddOne"        // Function to be called
 		qml: "integer.qml"    // Design input window
 	}
+
+	GroupTitle
+	{
+		title:	qsTr("Plotting")
+	}
+
+	Analysis
+	{
+	  title: "Plot a parabola"
+	  func: "Parabola"
+	  qml: "parabola.qml"
+	}
 }

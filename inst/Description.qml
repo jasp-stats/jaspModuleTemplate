@@ -11,7 +11,8 @@ Description
 	maintainer	: "JASP Team <info@jasp-stats.org>"
 	website		: "https://jasp-stats.org"
 	license		: "GPL (>= 2)"
-	requiresData: false
+	preloadData: true
+	requiresData: true
 
 
 	GroupTitle
@@ -21,9 +22,17 @@ Description
 
 	Analysis
 	{
+	  title: "Add one"      // Title for window
 	  menu: "Add one"       // Title for ribbon
-		title: "Add one"      // Title for window
 		func: "AddOne"        // Function to be called
 		qml: "integer.qml"    // Design input window
+	}
+
+	Analysis
+	{
+	  title: "Load data"
+	  menu: "Load data"
+	  func: "ProcessData"
+	  qml: "data.qml"
 	}
 }

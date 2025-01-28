@@ -16,15 +16,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all branches and commit history
 
-      # - name: Install yq
-      # run: |
-      #   sudo apt-get update
-      #   sudo apt-get install -y yq
-
       - name: Extract Package Name from meta.yaml
         run: |
-          # PACKAGE_NAME=$(yq -r '.package.name' meta.yaml || echo "")
-          PACKAGE_NAME=$(grep "^Package:" | awk '{print $2}')
+          PACKAGE_NAME=$(cat DESCRIPTION | grep "^Package:" | awk '{print $2}')
           if [ -z "$PACKAGE_NAME" ]; then
             echo "Error: Package name not found in meta.yaml" >&2
             exit 1

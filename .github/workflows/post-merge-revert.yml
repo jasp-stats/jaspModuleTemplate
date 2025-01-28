@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all branches and commit history
 
-      - name: Extract Package Name from meta.yaml
+      - name: Extract Package Name from DESCRIPTION
         run: |
           PACKAGE_NAME=$(cat DESCRIPTION | grep "^Package:" | awk '{print $2}')
           if [ -z "$PACKAGE_NAME" ]; then

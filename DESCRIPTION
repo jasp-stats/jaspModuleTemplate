@@ -1,4 +1,4 @@
-Package: myAwsomeModule
+Package: jaspModuleTemplate
 Type: Package
 Title: A module for JASP
 Version: 0.1.0

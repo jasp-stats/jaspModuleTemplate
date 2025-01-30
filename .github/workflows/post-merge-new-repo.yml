@@ -49,10 +49,14 @@ jobs:
           fi
 
       - name: Push Merged Code to New Repository
+        env:
+          ORG_PAT: ${{ secrets.ORG_PAT }} # Personal Access Token with org scope
+          ORG_NAME: "jasp-escience" # Replace with your actual organization name
+          REPO_NAME: ${{ env.PACKAGE_NAME }}-module
         run: |
-          git clone "https://github.com/${{ github.repository }}.git" temp_repo
+          git clone "https://github.com/${ORG_NAME}/${REPO_NAME}.git" temp_repo
           cd temp_repo
-          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${ORG_NAME}/${{ env.PACKAGE_NAME }}.git"
+          git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${ORG_NAME}/${REPO_NAME}.git"
           git push --mirror
 
   revert_template_branch:

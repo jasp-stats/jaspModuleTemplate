@@ -54,8 +54,10 @@ jobs:
           ORG_NAME: "jasp-escience" # Replace with your actual organization name
           REPO_NAME: ${{ env.PACKAGE_NAME }}-module
         run: |
-          git clone "https://github.com/${ORG_NAME}/${REPO_NAME}.git" temp_repo
+          git clone "https://github.com/${{ github.repository }}.git" temp_repo
           cd temp_repo
+          git fetch
+          git checkout dev/template
           git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${ORG_NAME}/${REPO_NAME}.git"
           git push --mirror
 

@@ -1,9 +1,11 @@
 name: Post-Merge Branch and Revert Template Branch
 
 on:
-  pull_request_target:
-    types:
-      - closed # Trigger when a pull request is closed (merged or not)
+  workflow_dispatch:
+  #
+  # pull_request_target:
+  #   types:
+  #     - closed # Trigger when a pull request is closed (merged or not)
 
 jobs:
   post_merge_revert:

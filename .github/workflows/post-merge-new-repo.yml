@@ -33,6 +33,7 @@ jobs:
           ORG_NAME: "jasp-escience" # Replace with your actual organization name
           REPO_NAME: ${{ env.PACKAGE_NAME }}-module
         run: |
+          echo "Creating repository $ORG_NAME/$REPO_NAME..."
           RESPONSE=$(curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
                        -H "Accept: application/vnd.github+json" \
                        https://api.github.com/orgs/${ORG_NAME}/repos \

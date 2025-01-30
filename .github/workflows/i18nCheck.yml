@@ -1,11 +1,14 @@
-on: 
-  push:
-    paths: ['**.R', '**.qml', '**.po', '**.yml']
- 
-  pull_request:
-    paths: ['**.R', '**.qml', '**.po', '**.yml']
-  
+on:
   workflow_dispatch:
+
+# on:
+#   push:
+#     paths: ['**.R', '**.qml', '**.po', '**.yml']
+#
+#   pull_request:
+#     paths: ['**.R', '**.qml', '**.po', '**.yml']
+#
+#   workflow_dispatch:
 
 name: i18n-check
 

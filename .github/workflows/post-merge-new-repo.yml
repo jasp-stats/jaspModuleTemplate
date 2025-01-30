@@ -7,7 +7,8 @@ on:
 
 jobs:
   create_new_repository:
-    if: ${{ github.event.pull_request.merged == true }} # Only run if the PR was merged
+    # if: ${{ github.event.pull_request.merged == true }} # Only run if the PR was merged
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true }} # Only run if the PR was merged from a fork
     runs-on: ubuntu-24.04
     env:
       ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
@@ -57,7 +58,8 @@ jobs:
           git push --mirror
 
   revert_main_branch:
-    if: always() # Always run this job, even if the previous job fails
+    # if: always() # Always run this job, even if the previous job fails
+    if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
 

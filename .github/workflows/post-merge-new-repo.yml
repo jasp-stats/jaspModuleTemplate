@@ -92,9 +92,15 @@ jobs:
               body: comment
             });
 
+  add_submodule:
+    if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+    runs-on: ubuntu-24.04
+    needs: [create_new_repository]
+
+    steps:
       - name: Add New Repository as a Submodule in jasp-escience/modules
         env:
-          MODULES_REPO: "github.com/${ORG_NAME}/modules"
+          MODULES_REPO: "github.com/jasp-escience/modules"
         run: |
           git clone https://x-access-token:${ORG_PAT}@${MODULES_REPO}.git modules_repo
           cd modules_repo

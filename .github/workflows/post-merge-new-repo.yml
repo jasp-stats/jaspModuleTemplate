@@ -10,7 +10,7 @@ jobs:
     # if: ${{ github.event.pull_request.merged == true }} # Only run if the PR was merged
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true }} # Only run if the PR was merged from a fork
     runs-on: ubuntu-24.04
-    outputs:
+    outputs: # Define output variables. We need these to pass information between jobs
       package_name: ${{ steps.extract_vars.outputs.package_name }}
       module_name: ${{ steps.extract_vars.outputs.module_name }}
       org_name: ${{ steps.extract_vars.outputs.org_name }}

@@ -91,3 +91,18 @@ jobs:
               repo: context.repo.repo,
               body: comment
             });
+
+      - name: Add New Repository as a Submodule in jasp-escience/modules
+        env:
+          MODULES_REPO: "github.com/${ORG_NAME}/modules"
+        run: |
+          git clone https://x-access-token:${ORG_PAT}@${MODULES_REPO}.git modules_repo
+          cd modules_repo
+
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          git submodule add https://github.com/${ORG_NAME}/${MODULE_NAME}.git modules/${MODULE_NAME}
+          git add .gitmodules modules/${MODULE_NAME}
+          git commit -m "Added ${MODULE_NAME} as a submodule under modules/"
+          git push origin main

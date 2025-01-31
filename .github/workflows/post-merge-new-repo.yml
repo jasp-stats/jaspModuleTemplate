@@ -35,9 +35,9 @@ jobs:
           echo "Package name: $PACKAGE_NAME"
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
           echo "MODULE_NAME=${PACKAGE_NAME}-module" >> $GITHUB_ENV
-          echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUTS
-          echo "module_name=${PACKAGE_NAME}-module" >> $GITHUB_OUTPUTS
-          echo "org_name=$ORG_NAME" >> $GITHUB_OUTPUTS
+          echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          echo "module_name=${PACKAGE_NAME}-module" >> $GITHUB_OUTPUT
+          echo "org_name=$ORG_NAME" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Create New Repository in Organization

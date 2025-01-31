@@ -103,6 +103,9 @@ jobs:
       - name: Add New Repository as a Submodule in jasp-escience/modules
         env:
           ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
+          ORG_NAME: ${{ env.ORG_NAME }}
+          MODULE_NAME: ${{ env.MODULE_NAME }}
+          MODULES_REPO: ${{ env.MODULES_REPO }}
         run: |
           echo "---------------------------------"
           echo $ORG_NAME

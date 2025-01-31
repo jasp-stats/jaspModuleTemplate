@@ -100,7 +100,6 @@ jobs:
     steps:
       - name: Add New Repository as a Submodule in jasp-escience/modules
         env:
-        env:
           ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
           ORG_NAME: "jasp-escience" # N.B. Replace with  actual organization name
           MODULES_REPO: "github.com/jasp-escience/modules"

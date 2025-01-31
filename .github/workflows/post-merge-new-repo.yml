@@ -103,7 +103,6 @@ jobs:
           ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
           ORG_NAME: "jasp-escience" # N.B. Replace with  actual organization name
           MODULES_REPO: "github.com/jasp-escience/modules"
-          MODULE_NAME: ${{ process.env.MODULE_NAME }}
         run: |
           git clone https://x-access-token:${ORG_PAT}@${MODULES_REPO}.git modules_repo
           cd modules_repo
@@ -111,7 +110,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          git submodule add https://github.com/${ORG_NAME}/${MODULE_NAME}.git modules/${MODULE_NAME}
-          git add .gitmodules modules/${MODULE_NAME}
-          git commit -m "Added ${MODULE_NAME} as a submodule under modules/"
+          git submodule add https://github.com/${ORG_NAME}/${process.env.MODULE_NAME}.git modules/${process.env.MODULE_NAME}
+          git add .gitmodules modules/${process.env.MODULE_NAME}
+          git commit -m "Added ${process.env.MODULE_NAME} as a submodule under modules/"
           git push origin main

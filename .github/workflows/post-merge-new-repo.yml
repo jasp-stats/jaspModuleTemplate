@@ -10,6 +10,10 @@ jobs:
     # if: ${{ github.event.pull_request.merged == true }} # Only run if the PR was merged
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true }} # Only run if the PR was merged from a fork
     runs-on: ubuntu-24.04
+    outputs:
+      package_name: ${{ steps.extract_vars.outputs.package_name }}
+      module_name: ${{ steps.extract_vars.outputs.module_name }}
+      org_name: ${{ steps.extract_vars.outputs.org_name }}
     env:
       ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
       ORG_NAME: "jasp-escience" # N.B. Replace with  actual organization name
@@ -21,6 +25,7 @@ jobs:
           fetch-depth: 0 # Fetch all branches and commit history
 
       - name: Extract Package Name from DESCRIPTION
+        id: extract_vars
         run: |
           PACKAGE_NAME=$(grep "^Package:" DESCRIPTION | awk '{print $2}')
           if [ -z "$PACKAGE_NAME" ]; then
@@ -30,8 +35,9 @@ jobs:
           echo "Package name: $PACKAGE_NAME"
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
           echo "MODULE_NAME=${PACKAGE_NAME}-module" >> $GITHUB_ENV
-          echo "ORG_NAME=$ORG_NAME" >> $GITHUB_ENV
-          echo "MODULES_REPO=github.com/${ORG_NAME}/modules" >> $GITHUB_ENV
+          echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUTS
+          echo "module_name=${PACKAGE_NAME}-module" >> $GITHUB_OUTPUTS
+          echo "org_name=$ORG_NAME" >> $GITHUB_OUTPUTS
         shell: bash
 
       - name: Create New Repository in Organization
@@ -95,23 +101,19 @@ jobs:
             });
 
   add_submodule:
-    if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+    # if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
 
+    env:
+      ORG_PAT: ${{ secrets.ORG_PAT }}
+      ORG_NAME: "jasp-escience"
+      MODULES_REPO: "github.com/jasp-escience/modules"
+      MODULE_NAME: ${{ needs.create_new_repository.outputs.module_name }}
+
     steps:
       - name: Add New Repository as a Submodule in jasp-escience/modules
-        env:
-          ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
-          ORG_NAME: ${{ env.ORG_NAME }}
-          MODULE_NAME: ${{ env.MODULE_NAME }}
-          MODULES_REPO: ${{ env.MODULES_REPO }}
         run: |
-          echo "---------------------------------"
-          echo $ORG_NAME
-          echo $MODULE_NAME
-          echo $MODULES_REPO
-          echo "---------------------------------"
           git clone https://x-access-token:${ORG_PAT}@${MODULES_REPO}.git modules_repo
           cd modules_repo
 

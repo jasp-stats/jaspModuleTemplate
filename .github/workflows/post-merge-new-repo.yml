@@ -30,6 +30,8 @@ jobs:
           echo "Package name: $PACKAGE_NAME"
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
           echo "MODULE_NAME=${PACKAGE_NAME}-module" >> $GITHUB_ENV
+          echo "ORG_NAME=$ORG_NAME" >> $GITHUB_ENV
+          echo "MODULES_REPO=github.com/${ORG_NAME}/modules" >> $GITHUB_ENV
         shell: bash
 
       - name: Create New Repository in Organization
@@ -101,16 +103,19 @@ jobs:
       - name: Add New Repository as a Submodule in jasp-escience/modules
         env:
           ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
-          ORG_NAME: "jasp-escience" # N.B. Replace with  actual organization name
-          MODULES_REPO: "github.com/jasp-escience/modules"
         run: |
+          echo "---------------------------------"
+          echo $ORG_NAME
+          echo $MODULE_NAME
+          echo $MODULES_REPO
+          echo "---------------------------------"
           git clone https://x-access-token:${ORG_PAT}@${MODULES_REPO}.git modules_repo
           cd modules_repo
 
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          git submodule add https://github.com/${ORG_NAME}/${process.env.MODULE_NAME}.git modules/${process.env.MODULE_NAME}
-          git add .gitmodules modules/${process.env.MODULE_NAME}
-          git commit -m "Added ${process.env.MODULE_NAME} as a submodule under modules/"
+          git submodule add https://github.com/${ORG_NAME}/${MODULE_NAME}.git modules/${MODULE_NAME}
+          git add .gitmodules modules/${MODULE_NAME}
+          git commit -m "Added ${MODULE_NAME} as a submodule under modules/"
           git push origin main

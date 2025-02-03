@@ -71,10 +71,10 @@ jobs:
 
   revert_main_branch:
     if: always() # Always run this job, even if the previous job fails
-    # permissions:
-    #   contents: write
-    #   actions: read
-    #   pull-requests: write
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: write
 
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
@@ -96,7 +96,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           # Authenticate Git with Personal Access Token (PAT)
-          git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${{ github.repository }}.git"
+          # git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${{ github.repository }}.git"
 
       - name: Revert Main Branch to Pre-Merge State
         if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
@@ -108,12 +108,12 @@ jobs:
       - name: Comment on Pull Request
         if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
         uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.ORG_PAT }}
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.ORG_PAT }}
         with:
           script: |
             const module_name = process.env.MODULE_NAME;
-            const comment = `🎉 The pull request was merged. A new repository [ **${module_name}** ](https://github.com/${{ github.repository_owner }}/**${module_name}**) has been created in the organization with the merged content. The main branch has been reverted.`;
+            const comment = `🎉 The pull request was merged. A new repository [ **${module_name}** ](https://github.com/${{ github.repository_owner }}/${module_name}) has been created in the organization with the merged content. The main branch has been reverted.`;
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,

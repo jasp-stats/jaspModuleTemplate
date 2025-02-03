@@ -42,3 +42,17 @@ jobs:
             exit 1
           fi
         shell: bash
+
+      - name: Check if `.github/` folder was modified using Git diff
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          if echo "$CHANGED_FILES" | grep -q "^\.github/"; then
+            echo "❌ The `modules/` folder was been modified."
+            exit 1
+          else
+            echo "✅ The `modules/` folder has NOT modified."
+          fi

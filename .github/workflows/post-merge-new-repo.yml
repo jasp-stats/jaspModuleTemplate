@@ -69,8 +69,7 @@ jobs:
           git push --mirror
 
   revert_main_branch:
-    # if: always() # Always run this job, even if the previous job fails
-    if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+    if: always() # Always run this job, even if the previous job fails
     # permissions:
     #   contents: write
     #   actions: read
@@ -84,12 +83,14 @@ jobs:
 
     steps:
       - name: Checkout Repository
+        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Configure Git User
+        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
@@ -97,12 +98,14 @@ jobs:
           git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${{ github.repository }}.git"
 
       - name: Revert Main Branch to Pre-Merge State
+        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
         run: |
           MERGE_COMMIT=$(git rev-parse HEAD)
           git revert -m 1 $MERGE_COMMIT || echo "Revert failed, continuing..."
           git push origin main || echo "Push failed, continuing..."
 
       - name: Comment on Pull Request
+        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
         uses: actions/github-script@v6
         env:
           GITHUB_TOKEN: ${{ secrets.ORG_PAT }}

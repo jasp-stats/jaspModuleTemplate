@@ -5,11 +5,12 @@ on:
     types:
       - closed # Trigger when a pull request is closed (merged or not)
 
+permissions: {}
+
 jobs:
   create_new_repository:
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true }} # Only run if the PR was merged from a fork
     runs-on: ubuntu-24.04
-    permissions: {}
 
     outputs: # Define output variables. We need these to pass information between jobs
       module_name: ${{ steps.extract_vars.outputs.module_name }}
@@ -70,6 +71,10 @@ jobs:
   revert_main_branch:
     # if: always() # Always run this job, even if the previous job fails
     if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+    permissions:
+      contents: write
+      actions: read
+
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
     env:

@@ -51,8 +51,8 @@ jobs:
           echo "$CHANGED_FILES"
 
           if echo "$CHANGED_FILES" | grep -q "^\.github/"; then
-            echo "❌ The `modules/` folder was been modified."
+            echo "❌ The .github/ folder was been modified."
             exit 1
           else
-            echo "✅ The `modules/` folder has NOT modified."
+            echo "✅ The .github/ folder has NOT modified."
           fi

@@ -74,6 +74,7 @@ jobs:
     permissions:
       contents: write
       actions: read
+      pull-requests: write
 
     runs-on: ubuntu-24.04
     needs: [create_new_repository]

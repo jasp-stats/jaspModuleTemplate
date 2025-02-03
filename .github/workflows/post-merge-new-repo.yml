@@ -38,7 +38,7 @@ jobs:
             echo "Error: PACKAGE_NAME contains invalid characters!" >&2
             exit 1
           fi
-
+          echo "Oooops!"
           echo "MODULE_NAME=${PACKAGE_NAME}-module" >> $GITHUB_ENV
           echo "module_name=${PACKAGE_NAME}-module" >> $GITHUB_OUTPUT
         shell: bash

@@ -99,8 +99,8 @@ jobs:
         if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
         run: |
           MERGE_COMMIT=$(git rev-parse HEAD)
-          git revert -m 1 $MERGE_COMMIT || echo "Revert failed, continuing..."
-          git push origin main || echo "Push failed, continuing..."
+          git revert -m 1 $MERGE_COMMIT
+          git push origin main
 
       - name: Comment on Pull Request
         if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork

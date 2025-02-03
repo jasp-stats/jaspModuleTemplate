@@ -1,7 +1,8 @@
 name: Post-Merge Repository Creation and Revert Pull Request
 
 on:
-  pull_request_target:
+  # pull_request_target:
+  pull_request:
     types:
       - closed # Trigger when a pull request is closed (merged or not)
 

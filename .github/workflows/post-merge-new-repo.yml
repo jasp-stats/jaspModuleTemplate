@@ -1,7 +1,7 @@
 name: Post-Merge Repository Creation and Revert Pull Request
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed # Trigger when a pull request is closed (merged or not)
 
@@ -71,26 +71,30 @@ jobs:
   revert_main_branch:
     # if: always() # Always run this job, even if the previous job fails
     if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
-    permissions:
-      contents: write
-      actions: read
-      pull-requests: write
+    # permissions:
+    #   contents: write
+    #   actions: read
+    #   pull-requests: write
 
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
     env:
       MODULE_NAME: ${{ needs.create_new_repository.outputs.module_name }}
+      ORG_PAT: ${{ secrets.ORG_PAT }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Configure Git User
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          # Authenticate Git with Personal Access Token (PAT)
+          git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${{ github.repository }}.git"
 
       - name: Revert Main Branch to Pre-Merge State
         run: |
@@ -100,6 +104,8 @@ jobs:
 
       - name: Comment on Pull Request
         uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.ORG_PAT }}
         with:
           script: |
             const module_name = process.env.MODULE_NAME;

@@ -14,8 +14,10 @@ jobs:
     steps:
       # Step 1: Check out the repository
       - name: Checkout repository
-        persist-credentials: false
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       # Step 2: Check if the DESCRIPTION file exists
       - name: Verify DESCRIPTION file exists

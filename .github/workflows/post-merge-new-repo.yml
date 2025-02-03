@@ -5,15 +5,15 @@ on:
     types:
       - closed # Trigger when a pull request is closed (merged or not)
 
+permissions: {}
+
 jobs:
   create_new_repository:
-    # if: ${{ github.event.pull_request.merged == true }} # Only run if the PR was merged
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true }} # Only run if the PR was merged from a fork
     runs-on: ubuntu-24.04
+
     outputs: # Define output variables. We need these to pass information between jobs
-      package_name: ${{ steps.extract_vars.outputs.package_name }}
       module_name: ${{ steps.extract_vars.outputs.module_name }}
-      org_name: ${{ steps.extract_vars.outputs.org_name }}
     env:
       ORG_PAT: ${{ secrets.ORG_PAT }} # N.B. Check validity of Personal Access Token with org scope
       ORG_NAME: "jasp-escience" # N.B. Replace with  actual organization name
@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all branches and commit history
+          persist-credentials: false # Do not persist credentials to the git config
 
       - name: Extract Package Name from DESCRIPTION
         id: extract_vars
@@ -32,12 +33,14 @@ jobs:
             echo "Error: Package name not found in DESCRIPTION" >&2
             exit 1
           fi
-          echo "Package name: $PACKAGE_NAME"
-          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+          # Prevent special characters in package name
+          if [[ ! "$PACKAGE_NAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "Error: PACKAGE_NAME contains invalid characters!" >&2
+            exit 1
+          fi
+
           echo "MODULE_NAME=${PACKAGE_NAME}-module" >> $GITHUB_ENV
-          echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
           echo "module_name=${PACKAGE_NAME}-module" >> $GITHUB_OUTPUT
-          echo "org_name=$ORG_NAME" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Create New Repository in Organization
@@ -68,8 +71,14 @@ jobs:
   revert_main_branch:
     # if: always() # Always run this job, even if the previous job fails
     if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+    permissions:
+      contents: write
+      actions: read
+
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
+    env:
+      MODULE_NAME: ${{ needs.create_new_repository.outputs.module_name }}
 
     steps:
       - name: Checkout Repository
@@ -92,7 +101,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const comment = `The pull request was merged. A new repository [${process.env.PACKAGE_NAME}](https://github.com/${{ github.repository_owner }}/${process.env.PACKAGE_NAME}) has been created in the organization with the merged content. The main branch has been reverted.`;
+            const comment = "The pull request was merged. A new repository [$MODULE_NAME](https://github.com/${{ github.repository_owner }}/$MODULE_NAME) has been created in the organization with the merged content. The main branch has been reverted.";
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,

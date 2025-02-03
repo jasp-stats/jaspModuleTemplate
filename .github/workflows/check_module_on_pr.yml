@@ -33,8 +33,12 @@ jobs:
         run: |
           PACKAGE_NAME=$(cat DESCRIPTION | grep "^Package:" | awk '{print $2}')
           if [ -z "$PACKAGE_NAME" ]; then
-            echo "Error: Package name not found in meta.yaml" >&2
+            echo "Error: Package name not found in DESCRIPTION" >&2
             exit 1
           fi
-          echo "Package name OK: $PACKAGE_NAME"
+          # Prevent special characters in package name
+          if [[ ! "$PACKAGE_NAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "Error: PACKAGE_NAME contains invalid characters!" >&2
+            exit 1
+          fi
         shell: bash

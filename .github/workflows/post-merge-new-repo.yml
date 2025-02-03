@@ -102,7 +102,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const comment = "The pull request was merged. A new repository [$MODULE_NAME](https://github.com/${{ github.repository_owner }}/$MODULE_NAME) has been created in the organization with the merged content. The main branch has been reverted.";
+            const module_name = process.env.MODULE_NAME;
+            const comment = `🎉 The pull request was merged. A new repository [ **${module_name}** ](https://github.com/${{ github.repository_owner }}/**${module_name}**) has been created in the organization with the merged content. The main branch has been reverted.`;
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,

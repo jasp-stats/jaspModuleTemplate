@@ -4,6 +4,8 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+permissions: {}
+
 jobs:
   check-description-file:
     if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run on PRs from forks
@@ -12,6 +14,7 @@ jobs:
     steps:
       # Step 1: Check out the repository
       - name: Checkout repository
+        persist-credentials: false
         uses: actions/checkout@v4
 
       # Step 2: Check if the DESCRIPTION file exists

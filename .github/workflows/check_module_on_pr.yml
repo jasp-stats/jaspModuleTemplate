@@ -1,4 +1,4 @@
-name: Check DESCRIPTION File
+name: Check pre-requisites for module creation
 
 on:
   pull_request:
@@ -10,6 +10,8 @@ jobs:
   check-description-file:
     if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run on PRs from forks
     runs-on: ubuntu-latest
+    env:
+      ORG_NAME: "jasp-escience"
 
     steps:
       # Step 1: Check out the repository
@@ -31,7 +33,8 @@ jobs:
 
       - name: Check for package name in DESCRIPTION
         run: |
-          PACKAGE_NAME=$(cat DESCRIPTION | grep "^Package:" | awk '{print $2}')
+          # PACKAGE_NAME=$(cat DESCRIPTION | grep "^Package:" | awk '{print $2}')
+          PACKAGE_NAME=$(awk -F ': ' '/^Package:/ {print $2}' DESCRIPTION | tr -d '\r')
           if [ -z "$PACKAGE_NAME" ]; then
             echo "Error: Package name not found in DESCRIPTION" >&2
             exit 1
@@ -41,6 +44,7 @@ jobs:
             echo "Error: PACKAGE_NAME contains invalid characters!" >&2
             exit 1
           fi
+          echo "MODULE_NAME=${PACKAGE_NAME}-module" >> $GITHUB_ENV
         shell: bash
 
       - name: Check if `.github/` folder was modified using Git diff
@@ -56,3 +60,29 @@ jobs:
           else
             echo "✅ The .github/ folder has NOT modified."
           fi
+
+      - name: Check if module already exists submodules
+        env:
+          MODULE_NAME: ${{ env.MODULE_NAME }}
+        run: |
+          git clone --depth=1 https://github.com/$ORG_NAME/modules.git target_repo
+          cd target_repo
+          if git config --file .gitmodules --get-regexp path | grep -q "^submodule.${MODULE_NAME} "; then
+            echo "❌ Submodule '${MODULE_NAME}' found! Failing the workflow."
+            exit 1
+          else
+            echo "✅ No submodule named '${MODULE_NAME}' found."
+          fi
+        shell: bash
+
+      - name: Check if repository exists in organization
+        env:
+          MODULE_NAME: ${{ env.MODULE_NAME }}
+        run: |
+          if curl -s -o /dev/null -w "%{http_code}" "https://github.com/$ORG_NAME/$MODULE_NAME" | grep -q "200"; then
+            echo "❌ Repository '${MODULE_NAME}' exists in organization '${ORG_NAME}'. Failing the workflow."
+            exit 1
+          else
+            echo "✅ Repository '${MODULE_NAME}' does not exist in organization '${ORG_NAME}'."
+          fi
+        shell: bash

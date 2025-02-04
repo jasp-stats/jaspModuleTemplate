@@ -28,7 +28,8 @@ jobs:
       - name: Extract Package Name from DESCRIPTION
         id: extract_vars
         run: |
-          PACKAGE_NAME=$(grep "^Package:" DESCRIPTION | awk '{print $2}')
+          # PACKAGE_NAME=$(grep "^Package:" DESCRIPTION | awk '{print $2}')
+          PACKAGE_NAME=$(awk -F ': ' '/^Package:/ {print $2}' DESCRIPTION | tr -d '\r')
           if [ -z "$PACKAGE_NAME" ]; then
             echo "Error: Package name not found in DESCRIPTION" >&2
             exit 1

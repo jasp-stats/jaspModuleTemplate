@@ -8,10 +8,10 @@ AddOne <- function(jaspResults, dataset, options) {
 }
 
 ProcessData <- function(jaspResults, dataset, options) {
-  print("Find me!")
-  print(dataset)
-
-  result <- paste0(as.character(dataset[,options$ts]), collapse = "")
+  # Dataset access
+  # options$ts --maps to--> 't'
+  # dataset[, options$ts] --maps to--> dataset$t
+  result <- paste(dataset[, options$ts], collapse = "")
   jaspResults[["result"]] <- createJaspHtml(text = result,
                                             title = "This is your result:")
 

@@ -35,4 +35,16 @@ Description
 	  func: "ProcessData"
 	  qml: "data.qml"
 	}
+
+	GroupTitle
+	{
+		title:	qsTr("Plotting")
+	}
+
+	Analysis
+	{
+	  title: "Plot a parabola"
+	  func: "Parabola"
+	  qml: "parabola.qml"
+	}
 }

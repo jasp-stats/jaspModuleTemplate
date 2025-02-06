@@ -17,3 +17,23 @@ ProcessData <- function(jaspResults, dataset, options) {
 
   return()
 }
+
+Parabola <- function(jaspResults, dataset, options) {
+  # Analysis
+  f <- function(x) { options$a * x^2 } # Function to be plotted
+  p <- ggplot2::ggplot() +             # Plotting command
+          ggplot2::xlim(-3, 3) +
+          ggplot2::ylim(0, 10) +
+          ggplot2::geom_function(fun = f)
+
+  # Aesthetics
+  parabolaPlot <- createJaspPlot(title = "Parabola",
+                                 width = 160,
+                                 height = 320)
+  parabolaPlot$dependOn(c("a")) # Refresh view whenever a changes
+
+  jaspResults[["parabolaPlot"]] <- parabolaPlot
+  parabolaPlot$plotObject <- p
+
+  return()
+}

@@ -8,7 +8,7 @@ permissions: {}
 
 jobs:
   check-description-file:
-    if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run on PRs from forks
+    if: github.event.pull_request.head.repo.fork == true # Only run on PRs from forks
     runs-on: ubuntu-latest
     env:
       ORG_NAME: "jasp-escience"

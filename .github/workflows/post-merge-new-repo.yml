@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   test_fork:
-    if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true # Only run if the PR was merged from a fork
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
     runs-on: ubuntu-24.04
 
     steps:

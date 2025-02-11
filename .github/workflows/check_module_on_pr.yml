@@ -2,13 +2,13 @@ name: Check pre-requisites for module creation
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
 
 permissions: {}
 
 jobs:
   check-description-file:
-    if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run on PRs from forks
+    if: github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
     runs-on: ubuntu-latest
     env:
       ORG_NAME: "jasp-escience"
@@ -67,7 +67,7 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/$ORG_NAME/modules.git target_repo
           cd target_repo
-          if git config --file .gitmodules --get-regexp path | grep -q "^submodule.${MODULE_NAME} "; then
+          if git config --file .gitmodules --get-regexp path | grep -q "^submodule.modules/${MODULE_NAME}.path"; then
             echo "❌ Submodule '${MODULE_NAME}' found! Failing the workflow."
             exit 1
           else

@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   create_new_repository:
-    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true }} # Only run if the PR was merged from a fork
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
     runs-on: ubuntu-24.04
 
     outputs: # Define output variables. We need these to pass information between jobs
@@ -83,13 +83,13 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+        if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Configure Git User
-        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+        if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
@@ -97,14 +97,14 @@ jobs:
           # git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${{ github.repository }}.git"
 
       - name: Revert Main Branch to Pre-Merge State
-        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+        if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
         run: |
           MERGE_COMMIT=$(git rev-parse HEAD)
           git revert -m 1 $MERGE_COMMIT
           git push origin main
 
       - name: Comment on Pull Request
-        if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+        if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
         uses: actions/github-script@v6
         # env:
         #   GITHUB_TOKEN: ${{ secrets.ORG_PAT }}
@@ -121,6 +121,7 @@ jobs:
 
   add_submodule:
     # if: ${{ github.event.pull_request.head.repo.fork == true }} # Only run if the PR is from a fork
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.fork == true && github.event.pull_request.head.repo.owner.login != 'jasp-escience'
     runs-on: ubuntu-24.04
     needs: [create_new_repository]
 

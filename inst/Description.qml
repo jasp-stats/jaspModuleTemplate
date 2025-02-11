@@ -11,6 +11,7 @@ Description
 	maintainer	: "JASP Team <info@jasp-stats.org>"
 	website		: "https://jasp-stats.org"
 	license		: "GPL (>= 2)"
+	icon        : "exampleIcon.png" // Located in /inst/icons/
 	preloadData: true
 	requiresData: true
 
@@ -24,8 +25,8 @@ Description
 	{
 	  title: "Add one"      // Title for window
 	  menu: "Add one"       // Title for ribbon
-		func: "AddOne"        // Function to be called
-		qml: "integer.qml"    // Design input window
+	  func: "AddOne"        // Function to be called
+      qml: "integer.qml"    // Design input window
 	}
 
 	Analysis

@@ -64,6 +64,8 @@ jobs:
         run: |
           REPO_NAME="${ORG_NAME}/${{ env.MODULE_NAME }}"
           git clone "https://github.com/${{ github.repository }}.git" temp_repo
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
           cd temp_repo
           git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${REPO_NAME}.git"
           rm .github/workflows/check_module_on_pr.yml

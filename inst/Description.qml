@@ -37,6 +37,14 @@ Description
 	  qml: "data.qml"
 	}
 
+	Analysis
+	{
+	  title: "Tabular results"
+	  menu: "Tabular results"
+	  func: "ProcessTable"
+	  qml: "table.qml"
+	}
+
 	GroupTitle
 	{
 		title:	qsTr("Plotting")

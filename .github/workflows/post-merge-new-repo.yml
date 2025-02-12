@@ -65,6 +65,8 @@ jobs:
           REPO_NAME="${ORG_NAME}/${{ env.MODULE_NAME }}"
           git clone "https://github.com/${{ github.repository }}.git" temp_repo
           cd temp_repo
+          rm .github/workflows/check_module_on_pr.yml
+          rm .github/workflows/post-merge-new-repo.yml
           git remote set-url origin "https://x-access-token:${ORG_PAT}@github.com/${REPO_NAME}.git"
           git push --mirror
 

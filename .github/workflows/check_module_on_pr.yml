@@ -1,8 +1,11 @@
 name: Check pre-requisites for module creation
 
 on:
-  pull_request:
-    types: [opened]
+  workflow_dispatch:
+
+# on:
+#   pull_request:
+#     types: [opened]
 
 permissions: {}
 

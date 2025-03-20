@@ -23,8 +23,8 @@ Description
 
 	Analysis
 	{
-	  title: "Add one"      // Title for window
-	  menu: "Add one"       // Title for ribbon
+	  title: qsTr("Add one")      // Title for window
+	  menu: qsTr("Add one")       // Title for ribbon
 	  func: "AddOne"        // Function to be called
       qml: "integer.qml"    // Design input window
 	}

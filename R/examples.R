@@ -42,7 +42,7 @@ Parabola <- function(jaspResults, dataset, options) {
           ggplot2::geom_function(fun = f)
 
   # Aesthetics
-  parabolaPlot <- createJaspPlot(title = "Parabola",
+  parabolaPlot <- createJaspPlot(title = gettext("Parabola"),
                                  width = 160,
                                  height = 320)
   parabolaPlot$dependOn(c("a")) # Refresh view whenever a changes

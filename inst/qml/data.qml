@@ -32,9 +32,22 @@ Form
   VariablesForm
   {
     AvailableVariablesList { name: "allVariables" }
-    AssignedVariablesList  { name: "ts"; label: qsTr("Times (t)"); singleVariable: true; allowedColumns: ["scale"] }
-    AssignedVariablesList  { name: "xs"; label: qsTr("Horizontal positions (x)"); singleVariable: true; allowedColumns: ["scale"] }
-    AssignedVariablesList  { name: "ys"; label: qsTr("Vertical positions (y)"); singleVariable: true; allowedColumns: ["scale"] }
+
+    AssignedVariablesList  {
+      name: "ts"
+      label: qsTr("Times (t)")
+      info: qsTr("This info entry adds documentation to the (i) icon in the analysis file. E.g., Specify variable containing the time.")
+      singleVariable: true
+      allowedColumns: ["scale"]
+    }
+
+    AssignedVariablesList  {
+      name: "xs"
+      label: qsTr("Positions (x)")
+      info: qsTr("This info entry adds documentation to the (i) icon in the analysis file. E.g., Specify variable containing the positions.")
+      singleVariable: true
+      allowedColumns: ["scale"]
+    }
   }
 
 }

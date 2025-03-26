@@ -10,8 +10,8 @@ AddOne <- function(jaspResults, dataset, options) {
 ProcessData <- function(jaspResults, dataset, options) {
   # Dataset access
   # options$ts --maps to--> 't'
-  # dataset[, options$ts] --maps to--> dataset$t
-  result <- paste(dataset[, options$ts], collapse = "")
+  # dataset[[options$ts]] --maps to--> dataset$t
+  result <- paste(dataset[[options$ts]], collapse = "")
   jaspResults[["result"]] <- createJaspHtml(text = result,
                                             title = "This is your result:")
 
@@ -25,8 +25,8 @@ ProcessTable <- function(jaspResults, dataset, options) {
   stats$addColumnInfo(name = gettext("times"))
   stats$addColumnInfo(name = gettext("xs"))
 
-  stats[["times"]] <- dataset[, options$ts]
-  stats[["xs"]] <- dataset[, options$xs]
+  stats[["times"]] <- dataset[[options$ts]]
+  stats[["xs"]] <- dataset[[options$xs]]
 
   jaspResults[["stats"]] <- stats
 

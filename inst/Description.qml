@@ -31,16 +31,16 @@ Description
 
 	Analysis
 	{
-	  title: "Load data"
-	  menu: "Load data"
+	  title: qsTr("Load data")
+	  menu: qsTr("Load data")
 	  func: "processData"
 	  qml: "data.qml"
 	}
 
 	Analysis
 	{
-	  title: "Tabular results"
-	  menu: "Tabular results"
+	  title: qsTr("Tabular results")
+	  menu: qsTr("Tabular results")
 	  func: "processTable"
 	  qml: "table.qml"
 	}
@@ -52,7 +52,7 @@ Description
 
 	Analysis
 	{
-	  title: "Plot a parabola"
+	  title: qsTr("Plot a parabola")
 	  func: "parabola"
 	  qml: "parabola.qml"
 	}

@@ -26,7 +26,7 @@ Form
 
   Text
   {
-      text: "This example shows how to plot a curve"
+      text: qsTr("This example shows how to plot a curve")
   }
 
 	IntegerField

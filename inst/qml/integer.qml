@@ -26,7 +26,7 @@ Form
 
   Text
   {
-      text: "This example shows how to manually introduce an input and perform a simple operation on it"
+      text: qsTr("This example shows how to manually introduce an input and perform a simple operation on it")
   }
 
 	IntegerField

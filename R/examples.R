@@ -1,4 +1,4 @@
-AddOne <- function(jaspResults, dataset, options) {
+addOne <- function(jaspResults, dataset, options) {
     result <- as.character(options$my_number + 1) # options$my_number comes from the menu created by inst/qml/integer.qml
 
     jaspResults[["result"]] <- createJaspHtml(text = result,
@@ -7,7 +7,7 @@ AddOne <- function(jaspResults, dataset, options) {
     return()
 }
 
-ProcessData <- function(jaspResults, dataset, options) {
+processData <- function(jaspResults, dataset, options) {
   # Dataset access
   # options$ts --maps to--> 't'
   # dataset[[options$ts]] --maps to--> dataset$t
@@ -18,7 +18,7 @@ ProcessData <- function(jaspResults, dataset, options) {
   return()
 }
 
-ProcessTable <- function(jaspResults, dataset, options) {
+processTable <- function(jaspResults, dataset, options) {
   # Prints the inputs as a table
   stats <- createJaspTable(gettext("Some descriptives"))
 
@@ -33,7 +33,7 @@ ProcessTable <- function(jaspResults, dataset, options) {
   return()
 }
 
-Parabola <- function(jaspResults, dataset, options) {
+parabola <- function(jaspResults, dataset, options) {
   # Analysis
   f <- function(x) { options$a * x^2 } # Function to be plotted
   p <- ggplot2::ggplot() +             # Plotting command

@@ -26,7 +26,7 @@ Description
 	  title: qsTr("Add one")      // Title for window
 	  menu: qsTr("Add one")       // Title for ribbon
 	  func: "addOne"        // Function to be called
-      qml: "integer.qml"    // Design input window
+      qml: "Integer.qml"    // Design input window
 	}
 
 	Analysis
@@ -34,7 +34,7 @@ Description
 	  title: qsTr("Load data")
 	  menu: qsTr("Load data")
 	  func: "processData"
-	  qml: "data.qml"
+	  qml: "Data.qml"
 	}
 
 	Analysis
@@ -42,7 +42,7 @@ Description
 	  title: qsTr("Tabular results")
 	  menu: qsTr("Tabular results")
 	  func: "processTable"
-	  qml: "table.qml"
+	  qml: "Table.qml"
 	}
 
 	GroupTitle
@@ -54,6 +54,6 @@ Description
 	{
 	  title: qsTr("Plot a parabola")
 	  func: "parabola"
-	  qml: "parabola.qml"
+	  qml: "Parabola.qml"
 	}
 }

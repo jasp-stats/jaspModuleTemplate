@@ -24,6 +24,9 @@ import JASP				1.0
 Form
 {
 
+  info: qsTr("This analysis just adds one to the input. \
+  It's purpose is to show an easy example of manual input.") // Used for populating the info tab
+
   Text
   {
       text: qsTr("This example shows how to manually introduce an input and perform a simple operation on it")
@@ -31,6 +34,8 @@ Form
 
 	IntegerField
 	{
+		info: qsTr("This is the number that will be used in the operation")
+
 		name: "my_number"              // This will map to options$my_number in R
 		label: qsTr("Type a number")   // qsTr allows for future translations
 

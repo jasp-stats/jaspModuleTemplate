@@ -24,6 +24,8 @@ import JASP				1.0
 Form
 {
 
+  info: qsTr("This example shows how to load a dataset and perform a simple operation on it") // Used for populating the info tab
+
   Text
   {
       text: qsTr("This example shows how to load a dataset and perform a simple operation on it")

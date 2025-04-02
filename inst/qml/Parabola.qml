@@ -23,6 +23,7 @@ import JASP				1.0
 
 Form
 {
+  info: qsTr("This example shows how to plot a curve.")
 
   Text
   {
@@ -31,6 +32,8 @@ Form
 
 	IntegerField
 	{
+		info: qsTr("The shape of the parabola is dynamically determined by this number")
+
 		name: "a"                      // This will map to options$a in R
 		label: qsTr("Type a number")   // qsTr allows for future translations
 

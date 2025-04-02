@@ -23,6 +23,7 @@ import JASP				1.0
 
 Form
 {
+  info: qsTr("This example shows how to load a dataset and output it as a table")
 
   Text
   {

@@ -24,11 +24,13 @@ import JASP				1.0
 Form
 {
 
-  info: qsTr("This example shows how to load a dataset and perform a simple operation on it") // Used for populating the info tab
+  info: qsTr("This example shows how to load a dataset and perform a simple operation on it. \
+      Specifically, it concatenates the values of a column. \n
+      e.g.: [1, 2, 3] -> '123'") // Used for populating the info tab
 
   Text
   {
-      text: qsTr("This example shows how to load a dataset and perform a simple operation on it")
+      text: qsTr("This example shows how to load a dataset and perform a simple operation on it.")
   }
 
   VariablesForm
@@ -38,15 +40,7 @@ Form
     AssignedVariablesList  {
       name: "ts"
       label: qsTr("Times (t)")
-      info: qsTr("This info entry adds documentation to the (i) icon in the analysis file. E.g., Specify variable containing the time.")
-      singleVariable: true
-      allowedColumns: ["scale"]
-    }
-
-    AssignedVariablesList  {
-      name: "xs"
-      label: qsTr("Positions (x)")
-      info: qsTr("This info entry adds documentation to the (i) icon in the analysis file. E.g., Specify variable containing the positions.")
+      info: qsTr("Vector representing times")
       singleVariable: true
       allowedColumns: ["scale"]
     }

@@ -3,7 +3,7 @@ import JASP.Module
 
 Description
 {
-	name		: "jaspModule"
+	name		: "jaspModuleTemplate"
 	title		: qsTr("Jasp Module")
 	description	: qsTr("Examples for module builders")
 	version		: "0.1"

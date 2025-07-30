@@ -35,6 +35,7 @@ Form
   Text
   {
       text: qsTr("This analysis shows you different interface elements of JASP")
+	  // The qsTr wrapper allows for future translations. As a rule of thumb, you should always use qsTr for any text that will be displayed to the user.
   }
 
 	Group
@@ -49,7 +50,16 @@ Form
 			label: qsTr("Tick mark")
 
 			// We can add some extra control parameters
-			checked: false
+			checked: false // Default value
+		}
+
+		RadioButtonGroup
+		{
+			name: "radio_buttons"
+			title: qsTr("Radio buttons")
+
+			RadioButton { value: "one value"; label: qsTr("One"); checked: true } // Single-line definition is also possible
+			RadioButton { value: "another value"; label: qsTr("Another") }
 		}
 	}
 
@@ -69,6 +79,40 @@ Form
 			defaultValue: 10
 			fieldWidth: 50
 			max: 1000
+		}
+
+		DoubleField
+		{
+			info: qsTr("This is the number that will be used in the operation")
+
+			name: "my_double"
+			label: qsTr("Input a number with decimals")
+
+			// We can add some extra control parameters
+			defaultValue: 3.14
+			fieldWidth: 50
+			max: 5
+			decimals: 2
+		}
+
+		PercentField
+		{
+			info: qsTr("This is the number that will be used in the operation")
+
+			name: "my_percent"
+			label: qsTr("Input a percentage")
+		}
+
+		TextField
+		{
+			info: qsTr("This is a text field that can be used to input any text")
+
+			name: "my_text"
+			label: qsTr("Input some text")
+
+			// We can add some extra control parameters
+			fieldWidth: 200
+			defaultValue: qsTr("Hello world!")
 		}
 	}
 

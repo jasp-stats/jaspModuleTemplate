@@ -1,8 +1,18 @@
 interfaceExample <- function(jaspResults, dataset, options) {
-    result <- as.character(options$my_tick_mark) # options$my_tick_mark was defined at inst/qml/Interface.qml
+    # Just show the options as they are understood the R backend
 
-    jaspResults[["result"]] <- createJaspHtml(text = result,
-                                              title = "Your tick mark is set to:")
+    # We'll build the output string by appending information to an initially empty container
+    aux <- ""
+
+    output_string <- aux |>
+      paste(gettextf("The tick mark is set to: %s", as.character(options$my_tick_mark), sep = "")) |>
+      paste(gettextf("The radio buttons are set to: %s", as.character(options$radio_buttons), sep = ". ")) |>
+      paste(gettextf("The integer is set to: %s", as.character(options$my_integer), sep = ". ")) |>
+      paste(gettextf("The double is set to: %s", as.character(options$my_double), sep = ". ")) |>
+      paste(gettextf("The percentage is set to: %s", as.character(options$my_percent), sep = ". ")) |>
+      paste(gettextf("The text box is set to: %s", options$my_text, sep = ". "))
+
+    jaspResults[["result"]] <- createJaspHtml(text = output_string)
 
     return()
 }

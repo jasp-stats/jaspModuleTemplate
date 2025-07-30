@@ -1,3 +1,12 @@
+interfaceExample <- function(jaspResults, dataset, options) {
+    result <- as.character(options$my_tick_mark) # options$my_tick_mark was defined at inst/qml/Interface.qml
+
+    jaspResults[["result"]] <- createJaspHtml(text = result,
+                                              title = "Your tick mark is set to:")
+
+    return()
+}
+
 addOne <- function(jaspResults, dataset, options) {
     result <- as.character(options$my_number + 1) # options$my_number comes from the menu created by inst/qml/integer.qml
 

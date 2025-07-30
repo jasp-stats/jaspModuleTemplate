@@ -15,6 +15,19 @@ Description
 	preloadData: true
 	requiresData: true
 
+	GroupTitle
+	{
+		title:	qsTr("Interfaces")
+	}
+
+	Analysis
+	{
+		title: qsTr("Interface example") // Title for window
+		menu: qsTr("Interface example")  // Title for ribbon
+		func: "interfaceExample"         // Function to be called
+		qml: "Interface.qml"             // Design input window
+		requiresData: false              // Allow to run even without data
+	}
 
 	GroupTitle
 	{

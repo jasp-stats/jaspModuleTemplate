@@ -65,6 +65,38 @@ Form
 
 	Group
 	{
+		title: qsTr("Other controls")
+
+		DropDown
+		{
+			info: qsTr("This is a dropdown that can be used to select one of a list of options")
+
+			name: "my_dropdown"
+			label: qsTr("Select an option")
+
+			// We can add some extra control parameters
+			values: ["option 1", "option 2", "option 3"]
+		}
+
+		Slider
+		{
+
+			info: qsTr("This is a slider that can be used to select a value in a range")
+
+			name: "my_slider"
+			label: qsTr("Select a value")
+
+			// We can add some extra control parameters
+			min: 0
+			max: 1
+			value: 0.5
+			decimals: 3
+			vertical: false
+		}
+	}
+
+	Group
+	{
 		title: qsTr("Keyboard inputs")
 
 		IntegerField
@@ -101,6 +133,14 @@ Form
 
 			name: "my_percent"
 			label: qsTr("Input a percentage")
+		}
+
+		CIField
+		{
+			info: qsTr("This is the number that will be used in the operation")
+
+			name: "my_ci"
+			label: qsTr("Input a confidence interval")
 		}
 
 		TextField

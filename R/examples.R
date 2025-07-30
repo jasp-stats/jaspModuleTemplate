@@ -13,12 +13,20 @@ interfaceExample <- function(jaspResults, dataset, options) {
         paste(gettextf("<br> The radio buttons are set to: %s", as.character(options$radio_buttons)))
     )
 
+    jaspResults[["others"]] <- createJaspHtml(
+      title = "Other controls",
+      text = aux |>
+        paste(gettextf("The chosen dropdown element is: %s", as.character(options$my_dropdown))) |>
+        paste(gettextf("<br> The slider value is: %s", as.character(options$my_slider)))
+    )
+
     jaspResults[["keyboard"]] <- createJaspHtml(
       title = "Keyboard controls",
       text = aux |>
         paste(gettextf("The integer is set to: %s", as.character(options$my_integer), sep = "")) |>
         paste(gettextf("<br> The double is set to: %s", as.character(options$my_double), sep = ". ")) |>
         paste(gettextf("<br> The percentage is set to: %s", as.character(options$my_percent), sep = ". ")) |>
+        paste(gettextf("<br> The confidence interval is set to: %s", as.character(options$my_ci), sep = ". ")) |>
         paste(gettextf("<br> The text box is set to: <i>%s</i>", options$my_text, sep = ". "))
     )
 

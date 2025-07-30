@@ -156,4 +156,33 @@ Form
 		}
 	}
 
+	Section
+	{
+		title: qsTr("Advanced controls")
+
+
+		Group
+		{
+			title: qsTr("Subordinate menus")
+
+			CheckBox
+			{
+
+				name: "my_advanced_tick_mark"
+				label: qsTr("Activate advanced options?")
+
+				// We can add some extra control parameters
+				checked: false // Default value
+
+				// The tic mark below is only available if the above tick mark is checked
+				CheckBox
+				{ 
+					name: "my_subordinate_tick_mark"
+					label: qsTr("Subordinate tick mark")
+					checked: false // Default value
+				}
+			}
+		}
+	}
+
 }

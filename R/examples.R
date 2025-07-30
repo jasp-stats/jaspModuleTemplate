@@ -1,18 +1,26 @@
 interfaceExample <- function(jaspResults, dataset, options) {
     # Just show the options as they are understood the R backend
+    jaspResults[["explanation"]] <- createJaspHtml(title = "Outputs as html",
+                                                   text = "Here we show the options as they are understood by the R backend.")
 
     # We'll build the output string by appending information to an initially empty container
     aux <- ""
 
-    output_string <- aux |>
-      paste(gettextf("The tick mark is set to: %s", as.character(options$my_tick_mark), sep = "")) |>
-      paste(gettextf("The radio buttons are set to: %s", as.character(options$radio_buttons), sep = ". ")) |>
-      paste(gettextf("The integer is set to: %s", as.character(options$my_integer), sep = ". ")) |>
-      paste(gettextf("The double is set to: %s", as.character(options$my_double), sep = ". ")) |>
-      paste(gettextf("The percentage is set to: %s", as.character(options$my_percent), sep = ". ")) |>
-      paste(gettextf("The text box is set to: %s", options$my_text, sep = ". "))
+    jaspResults[["logicals"]] <- createJaspHtml(
+      title = "Logical controls",
+      text = aux |>
+        paste(gettextf("The tick mark is set to: %s", as.character(options$my_tick_mark))) |>
+        paste(gettextf("<br> The radio buttons are set to: %s", as.character(options$radio_buttons)))
+    )
 
-    jaspResults[["result"]] <- createJaspHtml(text = output_string)
+    jaspResults[["keyboard"]] <- createJaspHtml(
+      title = "Keyboard controls",
+      text = aux |>
+        paste(gettextf("The integer is set to: %s", as.character(options$my_integer), sep = "")) |>
+        paste(gettextf("<br> The double is set to: %s", as.character(options$my_double), sep = ". ")) |>
+        paste(gettextf("<br> The percentage is set to: %s", as.character(options$my_percent), sep = ". ")) |>
+        paste(gettextf("<br> The text box is set to: <i>%s</i>", options$my_text, sep = ". "))
+    )
 
     return()
 }

@@ -3,31 +3,34 @@ interfaceExample <- function(jaspResults, dataset, options) {
     jaspResults[["explanation"]] <- createJaspHtml(title = "Outputs as html",
                                                    text = "Here we show the options as they are understood by the R backend.")
 
-    # We'll build the output string by appending information to an initially empty container
-    aux <- ""
-
     jaspResults[["logicals"]] <- createJaspHtml(
       title = "Logical controls",
-      text = aux |>
-        paste(gettextf("The tick mark is set to: %s", as.character(options$my_tick_mark))) |>
-        paste(gettextf("<br> The radio buttons are set to: %s", as.character(options$radio_buttons)))
+      text = sprintf("The tick mark is set to: %s
+                      The radio buttons are set to: %s",
+                      as.character(options$my_tick_mark),
+                      as.character(options$radio_buttons))
     )
 
     jaspResults[["others"]] <- createJaspHtml(
       title = "Other controls",
-      text = aux |>
-        paste(gettextf("The chosen dropdown element is: %s", as.character(options$my_dropdown))) |>
-        paste(gettextf("<br> The slider value is: %s", as.character(options$my_slider)))
+      text = sprintf("The chosen dropdown element is: %s
+                      The slider value is: %s",
+                      as.character(options$my_dropdown),
+                      as.character(options$my_slider))
     )
 
     jaspResults[["keyboard"]] <- createJaspHtml(
       title = "Keyboard controls",
-      text = aux |>
-        paste(gettextf("The integer is set to: %s", as.character(options$my_integer), sep = "")) |>
-        paste(gettextf("<br> The double is set to: %s", as.character(options$my_double), sep = ". ")) |>
-        paste(gettextf("<br> The percentage is set to: %s", as.character(options$my_percent), sep = ". ")) |>
-        paste(gettextf("<br> The confidence interval is set to: %s", as.character(options$my_ci), sep = ". ")) |>
-        paste(gettextf("<br> The text box is set to: <i>%s</i>", options$my_text, sep = ". "))
+      text = sprintf("The integer is set to: %s
+                      The double is set to: %s
+                      The percentage is set to: %s
+                      The confidence interval is set to: %s
+                      The text box is set to: <i>%s</i>",
+                      as.character(options$my_integer),
+                      as.character(options$my_double),
+                      as.character(options$my_percent),
+                      as.character(options$my_ci),
+                      options$my_text)
     )
 
     return()

@@ -1,14 +1,14 @@
 interfaceExample <- function(jaspResults, dataset, options) {
     # Just show the options as they are understood the R backend
-    jaspResults[["explanation"]] <- createJaspHtml(title = "Outputs as html",
-                                                   text = "Here we show the options as they are understood by the R backend.")
+    jaspResults[["explanation"]] <- createJaspHtml(title = "User inputs, returned as html",
+                                                   text = sprintf("Here we show, for pedagogical purposes, the user inputs as they are understood by the R backend."))
 
     jaspResults[["logicals"]] <- createJaspHtml(
       title = "Logical controls",
       text = sprintf("The tick mark is set to: %s
                       The radio buttons are set to: %s",
-                      as.character(options$my_tick_mark),
-                      as.character(options$radio_buttons))
+                      as.character(options$my_tick_mark), # These variables are defined in .inst/qml/Interface.qml
+                      as.character(options$radio_buttons)) # Notice we have to be careful with the data type
     )
 
     jaspResults[["others"]] <- createJaspHtml(
@@ -30,7 +30,17 @@ interfaceExample <- function(jaspResults, dataset, options) {
                       as.character(options$my_double),
                       as.character(options$my_percent),
                       as.character(options$my_ci),
-                      options$my_text)
+                      options$my_text) # No data-type conversion needed for text
+    )
+
+    jaspResults[["developers"]] <- createJaspHtml(
+      title = "Note for developers",
+      text = sprintf("Potential developers will find it useful to inspect the following files:
+                      <ul>
+                          <li><a href='https://github.com/jasp-stats/jaspModuleTemplate/blob/master/inst/qml/Interface.qml'>./inst/qml/Interface.qml</a>: builds the menu on the left panel</li>
+                          <li><a href='https://github.com/jasp-stats/jaspModuleTemplate/blob/master/R/examples.R'>./R/examples.R</a>: builds the output screen you are looking at</li>
+                          <li><a href='https://github.com/jasp-stats/jaspModuleTemplate/blob/master/inst/Description.qml'>./inst/Description.qml</a>: adds access to the current submodule to the module icon on the ribbon above</li>
+                      </ul>")
     )
 
     return()

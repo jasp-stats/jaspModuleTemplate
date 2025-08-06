@@ -29,6 +29,14 @@ Description
 		requiresData: false                // Allow to run even without data
 	}
 
+	Analysis
+	{
+	  title: qsTr("Load data")
+	  menu: qsTr("Load data")
+	  func: "processData"
+	  qml: "Data.qml"
+	}
+
 	GroupTitle
 	{
 		title:	qsTr("Basic functions")
@@ -41,14 +49,6 @@ Description
 	  func: "addOne"                // Function to be called
       qml: "Integer.qml"            // Design input window
 	  requiresData: false           // Allow to run even without data
-	}
-
-	Analysis
-	{
-	  title: qsTr("Load data")
-	  menu: qsTr("Load data")
-	  func: "processData"
-	  qml: "Data.qml"
 	}
 
 	Analysis

@@ -31,8 +31,8 @@ Description
 
 	Analysis
 	{
-	  title: qsTr("Load data")
-	  menu: qsTr("Load data")
+	  title: qsTr("Loading data")
+	  menu: qsTr("Loading data")
 	  func: "processData"
 	  qml: "Data.qml"
 	}

@@ -15,6 +15,27 @@ Description
 	preloadData: true
 	requiresData: true
 
+	GroupTitle
+	{
+		title:	qsTr("Basic interactivity")
+	}
+
+	Analysis
+	{
+		title: qsTr("Using the interface") // Title for window
+		menu: qsTr("Using the interface")  // Title for ribbon
+		func: "interfaceExample"           // Function to be called
+		qml: "Interface.qml"               // Design input window
+		requiresData: false                // Allow to run even without data
+	}
+
+	Analysis
+	{
+	  title: qsTr("Loading data")
+	  menu: qsTr("Loading data")
+	  func: "processData"
+	  qml: "Data.qml"
+	}
 
 	GroupTitle
 	{
@@ -28,14 +49,6 @@ Description
 	  func: "addOne"                // Function to be called
       qml: "Integer.qml"            // Design input window
 	  requiresData: false           // Allow to run even without data
-	}
-
-	Analysis
-	{
-	  title: qsTr("Load data")
-	  menu: qsTr("Load data")
-	  func: "processData"
-	  qml: "Data.qml"
 	}
 
 	Analysis

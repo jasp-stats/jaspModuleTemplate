@@ -1,15 +1,25 @@
 # jaspModuleTemplate
 
-This template repository is a starting point for developing a new module for JASP.
-It contains the necessary files and structure, plus a numbers of examples to get started.
+This template repository contains example functionality, which makes it an excellent starting point for developing a new JASP module.
+It contains the necessary files and structure, plus a numbers of examples to get started and to understand JASP's internals.
 
 ## How to use this repository
 
-Fork this template repository to your own GitHub account to start developing your module.
-You can then clone the repository to your local machine and start developing your module.
+1. Fork this template repository to your own GitHub account
+2. Clone it to your machine
+3. Open JASP and add it as a development module
 
-The repository contains example functionality.
-Feel free to reuse and adapt the examples to your needs.
+### For newcomers
+
+It is very illuminating to take a look at our examples **and** at the files that generate them.
+
+For instance, the image below shows the different menus for the _"Using the interface"_ analysis, together with the files that generate them:
+
+![](inst/img/JASP.png)
+
+### For contributors
+
+Feel free to reuse and adapt to your needs.
 Feel also free to remove the ones you don't need.
 
 ## Contributing back new module to JASP

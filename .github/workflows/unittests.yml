@@ -1,5 +1,4 @@
 on:
-  push:
   workflow_dispatch:
 
 # once the module takes shape you may want to uncomment these lines

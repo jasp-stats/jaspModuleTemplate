@@ -33,8 +33,8 @@ Description
 	{
 	  title: qsTr("Loading data")
 	  menu: qsTr("Loading data")
-	  func: "processData"
-	  qml: "Data.qml"
+	  func: "processTable"
+	  qml: "LoadingData.qml"
 	}
 
 	GroupTitle
@@ -47,16 +47,8 @@ Description
 	  title: qsTr("Add one")        // Title for window
 	  menu: qsTr("Add one")         // Title for ribbon
 	  func: "addOne"                // Function to be called
-      qml: "Integer.qml"            // Design input window
+    qml: "AddOne.qml"            // Design input window
 	  requiresData: false           // Allow to run even without data
-	}
-
-	Analysis
-	{
-	  title: qsTr("Tabular results")
-	  menu: qsTr("Tabular results")
-	  func: "processTable"
-	  qml: "Table.qml"
 	}
 
 	GroupTitle

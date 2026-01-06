@@ -89,14 +89,14 @@ parabola <- function(jaspResults, dataset, options) {
           ggplot2::ylim(0, 10) +
           ggplot2::geom_function(fun = f)
 # add jasp theme
-p <- jaspGraphs::geom_rangeframe() +
-    jaspGraphs::themeJaspRaw()
+  p <- p + jaspGraphs::geom_rangeframe() +
+      jaspGraphs::themeJaspRaw()
   # Aesthetics
   parabolaPlot <- createJaspPlot(title = gettext("Parabola"),
-                                 width = 160,
+                                 width = 320,
                                  height = 320)
   parabolaPlot$dependOn(c("a")) # Refresh view whenever a changes
-parabolaPlot$info <- gettext("This figure displays a parabola specified via the `a` option.")
+  parabolaPlot$info <- gettext("This figure displays a parabola specified via the `a` option.")
   jaspResults[["parabolaPlot"]] <- parabolaPlot
   parabolaPlot$plotObject <- p
 

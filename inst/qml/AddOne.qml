@@ -25,7 +25,18 @@ Form
 {
 
   info: qsTr("This analysis just adds one to the input. \
-  It's purpose is to show an easy example of manual input.") // Used for populating the info tab
+  It's purpose is to show an easy example of how a manual input gets processed \
+  by the backend, and returned.
+  \\
+  \\
+  From the technical point of view, the most challenging part of JASP module \
+  development is the communication between the QML interface and the R backend.
+  \\
+  \\
+  Playing with the current JASP analysis while simultaneously inspecting the R \
+  code in the files `./inst/qml/AddOne.qml` and `./R/examples.R` is a good \
+  way to learn how this communication works.
+  ")
 
   Text
   {

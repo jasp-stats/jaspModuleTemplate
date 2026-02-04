@@ -6,8 +6,8 @@ parabola <- function(jaspResults, dataset, options) {
     ggplot2::ylim(0, 10) +
     ggplot2::geom_function(fun = f)
   # add jasp theme
-  p <- jaspGraphs::geom_rangeframe() +
-    jaspGraphs::themeJaspRaw()
+  p <- p + jaspGraphs::geom_rangeframe() +
+           jaspGraphs::themeJaspRaw()
   # Aesthetics
   parabolaPlot <- createJaspPlot(title = gettext("Parabola"),
                                  width = 160,

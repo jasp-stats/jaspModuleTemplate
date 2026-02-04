@@ -51,4 +51,63 @@ Form
     }
   }
 
+  Section
+  {
+    title   : qsTr("Advanced")
+    columns: 1
+
+    Text { text: qsTr("This example shows how to get the factors of a variable") }
+
+    DropDown
+    {
+      id              : nominalOrOrdinalVariables
+      name            : "nominalOrOrdinalVariables"
+      label           : "Nominal or Ordinal variable"
+      addEmptyValue   : true
+      placeholderText : qsTr("Select one variable")
+      source          : [{isDataSetVariables: true, use: "type=nominal|ordinal" } ]
+      info            : qsTr("Only nominal or ordinal variable are available. Choose one of them.")
+    }
+
+    Text
+    {
+      text          : qsTr("<b>Warning</b>: No nominal or ordinal variable in your dataset.<br>Either change a variable type from scale to nominal (or ordina), or laod another dataset")
+      visible       : nominalOrOrdinalVariables.count === 1 // Empty value is already 1 element.
+    }
+
+    Group
+    {
+      visible       : nominalOrOrdinalVariables.value !== ""
+
+      ComponentsList
+      {
+        id            : valuePerLevel
+        title         : "Set value for each factor"
+        name          : "values"
+        source        : nominalOrOrdinalVariables.value !== "" ? [{values: [nominalOrOrdinalVariables.value], use: "levels" }] : []
+        headerLabels  : [qsTr("Check"), qsTr("Value")]
+
+        rowComponent: RowLayout
+        {
+          Text        { text: rowValue  ; Layout.preferredWidth: 100 * jaspTheme.uiScale  }
+          CheckBox    { name: "check"   ; Layout.preferredWidth: 100 * jaspTheme.uiScale  }
+          DoubleField { name: "double"                                                    }
+        }
+      }
+
+      Text
+      {
+        text          : qsTr("The factors checked in the list above will be present in the dropdown below")
+      }
+
+      DropDown
+      {
+        label            : "Checked factors"
+        name            : "checkedFactor"
+        source          : [{ name: "values", condition: "check"}]
+        addEmptyValue   : true
+      }
+    }
+  }
+
 }

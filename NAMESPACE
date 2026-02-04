@@ -1,6 +1,5 @@
 import(jaspBase)
 export(addOne)
-export(processData)
 export(processTable)
 export(parabola)
 export(interfaceExample)

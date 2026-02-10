@@ -71,7 +71,7 @@ Form
 
     Text
     {
-      text          : qsTr("<b>Warning</b>: No nominal or ordinal variable in your dataset.<br>Either change a variable type from scale to nominal (or ordina), or laod another dataset")
+      text          : qsTr("<b>Warning</b>: No nominal or ordinal variable in your dataset.<br>Either change a variable type from scale to nominal (or ordinal), or load another dataset")
       visible       : nominalOrOrdinalVariables.count === 1 // Empty value is already 1 element.
     }
 

@@ -22,6 +22,13 @@ For instance, the image below shows the different menus for the _"Using the inte
 Feel free to reuse and adapt to your needs.
 Feel also free to remove the ones you don't need.
 
+> **Renaming your module**
+>  
+> At some point, you'll want to rename the module from `jaspModuleTemplate` to the name you prefer.
+> To do so, we recommend searching and replacing the string `jaspModuleTemplate` across the whole project.
+>
+> Don't forget to rename your GitHub fork too!
+
 ## Contributing back new module to JASP
 
 Once you have developed your module, you can contribute it back to JASP by creating a pull request.

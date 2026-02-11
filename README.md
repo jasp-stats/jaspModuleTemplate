@@ -29,4 +29,5 @@ The JASP team will review your module and provide feedback.
 Once your module is accepted, a new repo is created in the JASP organization and your module is added to the JASP module repository.
 
 ## Reference
-[Adding your own modules to JASP](https://github.com/jasp-stats/jasp-desktop/blob/development/Docs/development/jasp-adding-module.md)
+
+[Tutorial: Development of a JASP module](https://github.com/jasp-stats/jasp-desktop/blob/development/Docs/development/jasp-modules-tutorial.md)

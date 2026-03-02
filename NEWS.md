@@ -1,41 +1,41 @@
 # jaspModuleTemplate Changelog
 
-> **How to read and update this changelog:**
+> **HOW TO READ AND UPDATE THIS CHANGELOG:**
 > 
 > This document follows a modified [Keep a Changelog](https://keepachangelog.com/) format adapted for the R/JASP ecosystem. Releases are listed in reverse chronological order (newest first).
-> 
-> * **Adding New Changes (For Contributors):** All new pull requests and commits should be logged at the very top of the file under the `# jaspTTests (development version)` header. Place your bullet point under the appropriate category (`## Added`, `## Fixed`, etc.). 
-> * **Issue & PR References:** You must reference the relevant GitHub Issue and/or Pull Request at the end of your line. Use the format `(Issue #123, PR #124)` or just `(PR #124)` if there is no linked issue.
-> * **Format Categories:** To help you quickly see how updates might affect your work, changes under each version are grouped into specific categories:
->   * **Added:** New features, plots, robust methods, or statistical tests.
->   * **Changed:** Updates to default statistical settings, dependencies, or UI layouts. *Pay close attention to these, as they may alter the results of existing analyses if you rely on defaults.*
->   * **Fixed:** Bug fixes, crash resolutions, and edge-case handling.
->   * **Deprecated / Removed:** Features or UI elements that are slated for removal or have been completely removed.
+> As an example see [jaspModuleTemplate](https://github.com/RensDofferhoff/jaspModuleTemplate/blob/master/NEWS.md)
+> * **Adding New Changes (For Contributors):** All new commits should be logged at the very top of the file under the `# jaspModuleTemplate (development version)` header. Place your bullet point under the appropriate category (`## Added`, `## Fixed`, etc.). 
+> * **Issue References:** Please reference the relevant GitHub Issue (if any) at the end of your line (e.g., `(Issue #123)`). 
+> * **Format Categories:** >   * **Added:** New template features, QML examples, or build tools.
+>   * **Changed:** Updates to default configurations, boilerplate code, or dependencies. 
+>   * **Fixed:** Bug fixes in the build pipeline, R wrappers, or QML layouts.
+>   * **Deprecated / Removed:** Outdated template components or legacy code.
 
 ---
 
 # jaspModuleTemplate (development version)
 
 ## Added
-* **QML Examples:** Added a new example demonstrating how to implement a dynamic `VariablesForm` with variable filtering (Issue #45, PR #48).
-* **GitHub Actions:** Added a `.github/workflows/R-CMD-check.yaml` boilerplate file to help new module developers set up CI/CD easily out of the box (PR #50).
+* Added a "Raincloud Plot" option to visualize data distributions alongside summary statistics (Issue #45).
+* Added Welch's t-test option
 
 ## Changed
-* **Boilerplate:** Updated the `DESCRIPTION` file template to require `jaspBase (>= 0.18.0)` by default, reflecting the latest JASP core architecture requirements (Issue #51, PR #52).
+* Reorganized the "Assumption Checks" menu to group homogeneity and normality tests together for better usability (Issue #51).
 
 ## Fixed
-* **Build Pipeline:** Fixed an issue where the `tools/installModule.R` script would fail on Windows machines due to incorrect backslash path handling (Issue #53, PR #54).
+* Fixed a fatal error where the analysis would crash if a user assigned a variable containing entirely missing values (`NA`) to the grouping factor (Issue #53).
 
 ---
 
 # jaspModuleTemplate 0.17.0
 
 ## Added
-* **R Code:** Included a boilerplate `jaspExampleAnalysis.R` file demonstrating best practices for handling errors and creating JASP state objects (PR #40).
-* **Translations:** Added placeholder `.ts` files to demonstrate the recommended folder structure and workflow for module translations (Issue #38, PR #42).
+* Included support for robust standard errors (HC3 estimators) via the `sandwich` package (Issue #39).
+* Added full interface translations for German and French (Issue #38).
 
 ## Changed
-* **Namespace:** Standardized the `NAMESPACE` file template to use `importFrom()` instead of importing entire packages, matching current JASP module performance guidelines (PR #44).
+* The default color palette for all plots has been updated to be colorblind-friendly (Issue #43).
+* The main results table now defaults to displaying 95% Confidence Intervals for effect sizes.
 
 ## Deprecated
-* **Legacy UI:** The old `ExampleAnalysis.qml` that used the deprecated QtQuick components has been marked for removal. Module developers should now base their interfaces on `ExampleAnalysis2.qml`, which uses JASP's custom QML components (Issue #30).
+* The legacy `jaspCreateLegacyPlot()` function used for backwards compatibility with older state files is marked for removal. Module developers should migrate to the modern plotting API (Issue #30).custom QML components (Issue #30).

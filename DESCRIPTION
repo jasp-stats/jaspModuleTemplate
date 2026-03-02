@@ -1,7 +1,7 @@
 Package: jaspModuleTemplate
 Type: Package
 Title: A module for JASP
-Version: 0.1.0
+Version: 0.1.1
 Date: 2020-10-15
 Author: JASP Team
 Website: jasp-stats.org

@@ -1,70 +1,76 @@
 name: Auto-bump Version on Merge
 
-# This triggers ONLY when code is pushed directly to master 
-# (which includes when a Pull Request is merged into it).
 on:
   push:
     branches:
-      - master  # If your default branch is 'main', change this to 'main'
+      - master
 
 jobs:
   bump-version:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required so the bot can push the new commit to your repo
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2 
 
       - name: Calculate and Update Version
+        id: calc
         run: |
-          # 1. Extract current version from the DESCRIPTION file
-          CURRENT_VERSION=$(grep -i "^Version:" DESCRIPTION | awk '{print $2}')
+          # Default to not skipping
+          echo "SKIP_BUMP=false" >> "$GITHUB_ENV"
           
-          # SECURITY CHECK: Ensure it strictly matches a version number format (e.g., 0.17.0 or 0.17.0.9000)
-          if [[ ! "$CURRENT_VERSION" =~ ^[0-9]+(\.[0-9]+)+$ ]]; then
-            echo "❌ Error: Invalid version format in DESCRIPTION: '$CURRENT_VERSION'"
+          # 1. Extract version from current commit
+          RAW_VERSION=$(grep -i "^Version:" DESCRIPTION | awk '{print $2}' | tr -d '\r')
+          
+          # 2. STRICT FORMAT CHECK: Must be exactly x.y.z (numbers only)
+          if [[ ! "$RAW_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ ERROR: Version '$RAW_VERSION' is not in strictly x.y.z format."
+            echo "Failing workflow to prevent malformed versioning."
             exit 1
           fi
           
-          # 2. Split the version string by periods into an array
-          IFS='.' read -r -a VERSION_PARTS <<< "$CURRENT_VERSION"
+          # 3. Get version from previous commit safely
+          OLD_ON_BRANCH=$(git show HEAD^:DESCRIPTION 2>/dev/null | grep -i "^Version:" | awk '{print $2}' | tr -d '\r' || true)
           
-          # 3. Increment the very last number by 1
-          LAST_INDEX=$((${#VERSION_PARTS[@]} - 1))
-          VERSION_PARTS[$LAST_INDEX]=$((VERSION_PARTS[$LAST_INDEX] + 1))
+          # 4. Do nothing if manual change is detected
+          if [ "$RAW_VERSION" != "$OLD_ON_BRANCH" ] && [ -n "$OLD_ON_BRANCH" ]; then
+            echo "Manual version bump detected ($OLD_ON_BRANCH -> $RAW_VERSION). Doing nothing."
+            echo "SKIP_BUMP=true" >> "$GITHUB_ENV"
+            exit 0
+          fi
+
+          # 5. z+1
+          IFS='.' read -r -a PARTS <<< "$RAW_VERSION"
+          X=${PARTS[0]}
+          Y=${PARTS[1]}
+          Z=${PARTS[2]}
           
-          # 4. Stitch the version string back together
-          NEW_VERSION=$(IFS='.'; echo "${VERSION_PARTS[*]}")
+          Z=$((Z + 1))
+          NEW_VERSION="$X.$Y.$Z"
           
-          echo "Bumping version from $CURRENT_VERSION to $NEW_VERSION"
+          echo "Bumping version from $RAW_VERSION to $NEW_VERSION"
           
-          # 5. Safely replace the old version with the new version in the file
-          sed -i "s/^Version: [0-9.]\+/Version: $NEW_VERSION/i" DESCRIPTION
+          # 6. Write to file (safely overwrites whatever comes after "Version: ")
+          sed -i "s/^Version:.*/Version: $NEW_VERSION/i" DESCRIPTION
           
-          # 6. Securely pass the new version to the next step for the commit message
-          cat <<EOF >> "$GITHUB_ENV"
-          NEW_VERSION=$NEW_VERSION
-          EOF
+          # Export for next step
+          echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
 
       - name: Commit and Push
+        if: env.SKIP_BUMP == 'false'
         run: |
-          # Configure Git to act as the official GitHub Actions bot
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Stage the changed file
           git add DESCRIPTION
           
-          # Check if there are actually changes to commit (prevents errors if version didn't change)
           if ! git diff-index --quiet HEAD; then
-            # The [skip ci] flag is CRITICAL. It tells GitHub NOT to trigger 
-            # another workflow run from this automated commit, preventing infinite loops.
             git commit -m "chore: auto-bump version to ${{ env.NEW_VERSION }} [skip ci]"
             git push
-            echo "✅ Successfully bumped version and pushed to master."
+            echo "✅ Successfully bumped version to ${{ env.NEW_VERSION }}."
           else
             echo "No changes needed."
           fi

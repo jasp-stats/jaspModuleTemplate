@@ -6,6 +6,6 @@ on:
 
 jobs:
   call-remind-news-workflow:
-    uses: jasp-stats/jasp-actions/.github/workflows/remind-news.yml@master
+    uses: jasp-stats/jasp-actions/.github/workflows/remind-news.yml@v1
     permissions:
       pull-requests: write

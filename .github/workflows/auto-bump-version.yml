@@ -1,0 +1,13 @@
+name: Auto-bump Version on Merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  call-bump-workflow:
+    # This points to the file you just created!
+    uses: jasp-stats/jasp-actions/.github/workflows/auto-bump-version.yml@v1
+    permissions:
+      contents: write

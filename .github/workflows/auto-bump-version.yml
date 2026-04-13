@@ -6,71 +6,8 @@ on:
       - master
 
 jobs:
-  bump-version:
-    runs-on: ubuntu-latest
+  call-bump-workflow:
+    # This points to the file you just created!
+    uses: jasp-stats/jasp-actions/.github/workflows/auto-bump-version.yml@master
     permissions:
       contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 
-
-      - name: Calculate and Update Version
-        id: calc
-        run: |
-          # Default to not skipping
-          echo "SKIP_BUMP=false" >> "$GITHUB_ENV"
-          
-          # 1. Extract version from current commit
-          RAW_VERSION=$(grep -i "^Version:" DESCRIPTION | awk '{print $2}' | tr -d '\r')
-          
-          # 2. STRICT FORMAT CHECK: Must be exactly x.y.z (numbers only)
-          if [[ ! "$RAW_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "❌ ERROR: Version '$RAW_VERSION' is not in strictly x.y.z format."
-            echo "Failing workflow to prevent malformed versioning."
-            exit 1
-          fi
-          
-          # 3. Get version from previous commit safely
-          OLD_ON_BRANCH=$(git show HEAD^:DESCRIPTION 2>/dev/null | grep -i "^Version:" | awk '{print $2}' | tr -d '\r' || true)
-          
-          # 4. Do nothing if manual change is detected
-          if [ "$RAW_VERSION" != "$OLD_ON_BRANCH" ] && [ -n "$OLD_ON_BRANCH" ]; then
-            echo "Manual version bump detected ($OLD_ON_BRANCH -> $RAW_VERSION). Doing nothing."
-            echo "SKIP_BUMP=true" >> "$GITHUB_ENV"
-            exit 0
-          fi
-
-          # 5. z+1
-          IFS='.' read -r -a PARTS <<< "$RAW_VERSION"
-          X=${PARTS[0]}
-          Y=${PARTS[1]}
-          Z=${PARTS[2]}
-          
-          Z=$((Z + 1))
-          NEW_VERSION="$X.$Y.$Z"
-          
-          echo "Bumping version from $RAW_VERSION to $NEW_VERSION"
-          
-          # 6. Write to file (safely overwrites whatever comes after "Version: ")
-          sed -i "s/^Version:.*/Version: $NEW_VERSION/i" DESCRIPTION
-          
-          # Export for next step
-          echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
-
-      - name: Commit and Push
-        if: env.SKIP_BUMP == 'false'
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          
-          git add DESCRIPTION
-          
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "chore: auto-bump version to ${{ env.NEW_VERSION }} [skip ci]"
-            git push
-            echo "✅ Successfully bumped version to ${{ env.NEW_VERSION }}."
-          else
-            echo "No changes needed."
-          fi

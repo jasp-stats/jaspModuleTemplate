@@ -1,41 +1,11 @@
 name: Remind NEWS.md Update
 
-# We only run this when the PR is first opened so the bot doesn't 
-# spam the contributor with comments on every single new commit.
 on:
   pull_request:
-    types: [opened]
+    types: [opened] # Only run once when the PR is first created
 
 jobs:
-  remind-news:
-    runs-on: ubuntu-latest
+  call-remind-news-workflow:
+    uses: jasp-stats/jasp-actions/.github/workflows/remind-news.yml@master
     permissions:
-      pull-requests: write # Required so the bot can leave a comment
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Check if NEWS.md was modified
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Get the list of changed files
-          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }} HEAD)
-          
-          # Check if NEWS.md is in that list
-          if echo "$CHANGED_FILES" | grep -q "^NEWS\.md$"; then
-            echo "✅ NEWS.md was updated. No reminder needed."
-            exit 0
-          else
-            echo "⚠️ NEWS.md not updated. Posting a friendly reminder..."
-            
-            # Use the GitHub CLI to post a comment directly to the PR
-            gh pr comment ${{ github.event.pull_request.number }} --body "👋 **Friendly reminder:** It looks like \`NEWS.md\` wasn't updated in this Pull Request. 
-            
-            If your changes include bug fixes, new features, or UI tweaks, please consider adding a quick note to the \`# jaspYourModule (development version)\` section so our users know about your awesome work! *(If this is just a minor typo fix, feel free to ignore this message.)*"
-            
-            # We exit with 0 (success) so the check turns green and does NOT block the PR
-            exit 0
-          fi
+      pull-requests: write

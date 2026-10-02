@@ -20,6 +20,9 @@
 * Added workflow to remind users to update their `NEWS.md`.
 * Added workflow to auto-bump version when user does not do so.
 
+## Changed
+* The suggested schedule for the unit-test workflow now runs twice a week (Monday and Thursday) instead of every weekday.
+
 ---
 
 # jaspModuleTemplate 0.1.0
